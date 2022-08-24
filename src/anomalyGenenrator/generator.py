@@ -1,5 +1,11 @@
+
+from random import random
+import re
 import pandas as pd
 import numpy as np
+from math import ceil
+import random
+from tqdm import tqdm
 
 #Preciso gerar anomalias na base e indentificalas
 #Elas precisam estar numa escala definida no tcc seguindo 2 parametros (intensidade, repetição da base)
@@ -10,5 +16,40 @@ import numpy as np
 
 
 
-def anomaly():
-    pass
+def anomaly(csv, intensidade, repeticao):
+    ids = []
+
+    dataframe = pd.read_csv(csv)
+    #a função ceil arredonda para cima
+    nElementos = ceil(dataframe.size * repeticao / 100)
+    for i in range(dataframe.size):
+        ids.append(i)
+
+    y = random.sample(ids,nElementos)
+
+    lista = []
+    alt = []
+
+
+    for index in tqdm(dataframe.index):
+        #print(dataframe["T_a"][index])
+        if index in y:
+            alt.append(1)
+            ano = desPadrao(dataframe,intensidade) + i
+            lista.append(ano)
+        else:
+            alt.append(0)
+            lista.append(index)
+
+    return alt
+
+
+
+def desPadrao (dataframe, intensidade):
+    
+    x = dataframe["T_a"].values.tolist()
+
+    xdes = np.std(x)
+    #print(xdes)
+
+    return intensidade * xdes
