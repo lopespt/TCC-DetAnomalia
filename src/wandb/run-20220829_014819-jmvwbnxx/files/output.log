@@ -1,0 +1,34 @@
+       values
+0        15.9
+1        11.0
+2        16.0
+3         1.5
+4        -8.2
+...       ...
+38231    27.6
+38232    27.8
+38233    26.5
+38234    25.8
+38235    26.4
+[38236 rows x 1 columns]
+       values
+0           0
+1           0
+2           0
+3           0
+4           0
+...       ...
+38231       1
+38232       1
+38233       1
+38234       1
+38235       1
+[38236 rows x 1 columns]
+Traceback (most recent call last):
+  File "testSvm.py", line 23, in <module>
+    model = svm.vectorMachine(X_train, X_test)
+TypeError: vectorMachine() missing 1 required positional argument: 'train_dataset_y'
+Traceback (most recent call last):
+  File "testSvm.py", line 23, in <module>
+    model = svm.vectorMachine(X_train, X_test)
+TypeError: vectorMachine() missing 1 required positional argument: 'train_dataset_y'

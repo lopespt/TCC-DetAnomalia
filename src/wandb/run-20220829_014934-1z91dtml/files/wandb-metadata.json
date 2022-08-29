@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2022-08-29T04:49:34.687613",
+    "startedAt": "2022-08-29T04:49:34.112653",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 2060",
+    "gpu_count": 1,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "testSvm.py",
+    "codePath": "src/testSvm.py",
+    "git": {
+        "remote": "https://github.com/lopespt/TCC-DetAnomalia.git",
+        "commit": "d492564a51d3e2f691474c0e325d7375832492c5"
+    },
+    "email": "kzuanetti53@gmail.com",
+    "root": "/home/kaike/code/tcc",
+    "host": "DESKTOP-IAF11RR",
+    "username": "kaike",
+    "executable": "/usr/bin/python3"
+}

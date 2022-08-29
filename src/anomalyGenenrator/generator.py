@@ -14,14 +14,14 @@ import threading
 #essas 2 variaveis vão de 20 a 80 %
 #é necessario ter 4 variaveis a base de treino x e y onde x é a base bruta e y é o valor se é anomalia ou não
 # e a base de teste x e y para comparar e fazer as metricas
-def desPadrao (dataframe, intensidade, coluna):
+def desPadrao (dataframe, coluna):
     
     x = dataframe[coluna].values.tolist()
 
     xdes = np.std(x)
     #print(xdes)
 
-    return intensidade * xdes
+    return xdes
 
 def apply(dataframe, intensidade, coluna, ids, nElementos):
     lista = []
@@ -33,12 +33,11 @@ def apply(dataframe, intensidade, coluna, ids, nElementos):
         #print(dataframe["T_a"][index])
         if index in y:
             alt.append(1)
-            ano = desPadrao(dataframe,intensidade, coluna) + ids
+            ano = round(intensidade * desPadrao(dataframe, coluna) + dataframe[coluna].iloc[index], 1)
             lista.append(ano)
         else:
             alt.append(0)
-            lista.append(index)    
-
+            lista.append(dataframe[coluna].iloc[index])
     return lista, alt
 
 def anomaly(csv, intensidade, repeticao):

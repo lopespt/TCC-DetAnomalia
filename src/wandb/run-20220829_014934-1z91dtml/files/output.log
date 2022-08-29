@@ -1,0 +1,36 @@
+       values
+0        15.9
+1        11.0
+2        16.0
+3         1.5
+4        -8.2
+...       ...
+38231    27.6
+38232    27.8
+38233    26.5
+38234    25.8
+38235    26.4
+[38236 rows x 1 columns]
+       values
+0           0
+1           0
+2           0
+3           0
+4           0
+...       ...
+38231       1
+38232       1
+38233       1
+38234       1
+38235       1
+[38236 rows x 1 columns]
+/home/kaike/.local/lib/python3.8/site-packages/sklearn/utils/validation.py:1111: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+Traceback (most recent call last):
+  File "testSvm.py", line 25, in <module>
+    wandb.sklearn.plot_classifier(model, X_train, X_test, y_train, y_test,  model_name="SVC")
+TypeError: classifier() missing 3 required positional arguments: 'y_pred', 'y_probas', and 'labels'
+Traceback (most recent call last):
+  File "testSvm.py", line 25, in <module>
+    wandb.sklearn.plot_classifier(model, X_train, X_test, y_train, y_test,  model_name="SVC")
+TypeError: classifier() missing 3 required positional arguments: 'y_pred', 'y_probas', and 'labels'
