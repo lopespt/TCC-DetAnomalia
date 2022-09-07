@@ -1,6 +1,7 @@
 
 from random import random
 import re
+from unittest import skip
 import pandas as pd
 import numpy as np
 from math import ceil
@@ -40,10 +41,10 @@ def apply(dataframe, intensidade, coluna, ids, nElementos):
             lista.append(dataframe[coluna].iloc[index])
     return lista, alt
 
-def anomaly(csv, intensidade, repeticao):
+def anomaly(csv, intensidade, repeticao, sensor):
     ids = []
 
-    dataframe = pd.read_csv(csv)
+    dataframe = pd.read_csv(csv, on_bad_lines="skip")
     #a função ceil arredonda para cima
     nElementos = ceil(dataframe.size * repeticao / 100)
     for i in tqdm(range(dataframe.size)):
@@ -52,7 +53,9 @@ def anomaly(csv, intensidade, repeticao):
     
 
 
-    lista, alt = apply(dataframe, intensidade, "T_a", ids, nElementos)
+    lista, y = apply(dataframe, intensidade, sensor, ids, nElementos)
+
+    alt = pd.DataFrame(y)
 
     return lista, alt
 
