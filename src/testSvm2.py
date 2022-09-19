@@ -19,13 +19,11 @@ def main():
 
     X_train, X_test, y_train, y_test = train_test_split(a, y, test_size=0.3, random_state=0)
 
-    model = svm.vectorMachine(X_train, X_test, y_train)
+    model,svc = svm.vectorMachine(X_train, X_test, y_train)
 
     print(confusion_matrix(y_test,model))
     print(classification_report(y_test,model))
     print(accuracy_score(y_test,model))
 
-    return y_test, model
-
-main()
+    return X_train, X_test, y_train, y_test, model,svc
 

@@ -3,18 +3,16 @@ from sklearn_genetic.space import Continuous, Categorical, Integer
 from sklearn_genetic.plots import plot_fitness_evolution, plot_search_space
 from sklearn.model_selection import StratifiedKFold
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.svm import SVC
+
+param_grid = {"kernel": Categorical(choices=["rbf", "linear"])}
 
 
-param_grid = {'min_weight_fraction_leaf': Continuous(0.01, 0.5, distribution='log-uniform'),
-              'bootstrap': Categorical([True, False]),
-              'max_depth': Integer(2, 30), 
-              'max_leaf_nodes': Integer(2, 35), 
-              'n_estimators': Integer(100, 300)}
-
-def main():
+def main(clf):
     evolved_estimator = GASearchCV(estimator=clf,
-                               cv=cv,
-                               scoring='f1',
+                               cv=None,
+                               scoring='accuracy',
                                population_size=10,
                                generations=35,
                                tournament_size=3,

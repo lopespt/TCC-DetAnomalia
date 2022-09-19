@@ -1,23 +1,25 @@
-from sklearn.tree import DecisionTreeClassifier, RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+from sklearn.ensemble import RandomForestClassifier
 
 
 
-def arvore(train_dataset_x,test_dataset_x,train_dataset_y):
+def arvore(train_dataset_x,train_dataset_y):
 
     arvRisco = DecisionTreeClassifier(criterion="entropy")
 
     model = arvRisco.fit(train_dataset_x,train_dataset_y)
 
-    return model
+    return model, arvRisco
 
 
-def aleArvore(train_dataset_x,train_dataset_y,test_dataset_x):
+def aleArvore(train_dataset_x,train_dataset_y):
 
 
     randomForest = RandomForestClassifier(n_estimators=100, criterion="entropy", random_state=0)
-    randomForest.fit(train_dataset_x, train_dataset_y)
+    model = randomForest.fit(train_dataset_x, train_dataset_y)
 
-    return randomForest.predict(test_dataset_x)
+    return model, randomForest
 
 
 

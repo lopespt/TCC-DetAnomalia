@@ -5,13 +5,13 @@ import testeClassBalance as tc
 
 from preprocessing import proc
 
-x,y = tc.balance()
+#x,y = tc.balance()
 
 def prepro(dataset):
 
     return proc.scalar(dataset)
 
 
-a = pd.DataFrame(prepro(x))
+#a = pd.DataFrame(prepro(x))
 
-print(a.head())
+#print(a.head())

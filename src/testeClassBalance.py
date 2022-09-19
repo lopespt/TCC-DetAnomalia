@@ -4,9 +4,9 @@ from classbalance import imbalance
 import pandas as pd
 
 def balance():
-    x = pd.read_csv("/home/kaike/code/tcc/src/x.csv")
+    x = pd.read_csv("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/x.csv")
 
-    y = pd.read_csv("/home/kaike/code/tcc/src/y.csv")
+    y = pd.read_csv("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/y.csv")
 
     x = pd.DataFrame(x["values"])
 
