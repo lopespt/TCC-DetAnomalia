@@ -44,7 +44,7 @@ def apply(dataframe, intensidade, coluna, ids, nElementos):
 def anomaly(csv, intensidade, repeticao, sensor):
     ids = []
 
-    dataframe = pd.read_csv(csv, on_bad_lines="skip")
+    dataframe = pd.read_csv(csv) #on_bad_lines="skip)
     #a função ceil arredonda para cima
     nElementos = ceil(dataframe.size * repeticao / 100)
     for i in tqdm(range(dataframe.size)):

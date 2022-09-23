@@ -5,7 +5,7 @@ import testeClassBalance as tc
 import pandas as pd
 from classifiers import svm
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 import testPreProcessing as tp
 
 from sklearn.svm import SVC
@@ -22,8 +22,8 @@ x,y = tc.balance()
 b = fusion.creatingMatrix(x)
 
 
-print(type(b))
-print(b.shape)
+#print(type(b))
+#print(b.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=1)
 
@@ -31,13 +31,14 @@ X_train = X_train[:1000]
 X_test = X_test[:1000]
 y_train = y_train[:1000]
 y_test = y_test[:1000]
+y_train.ravel()
 
-teste = X_train[:, 6]
+#teste = X_train[:, 6]
 lines, columns = X_train.shape
 linesTest, columnsTest = X_test.shape
 svm = SVC(kernel="linear", random_state=1, C=1.0, probability=True)
 function_inputs = b
-desired_output = 1
+desired_output = 1.0
 
 #fit = svm.fit(X_train, y_train)
 #predictions = fit.predict(X_test)
@@ -47,6 +48,7 @@ def on_start(ga_instance):
     print("on_start()")
 
 def on_fitness(ga_instance, population_fitness):
+    print("Fitness of the solution :", ga_instance.best_solution()[1])
     print("on_fitness()")
 
 def on_parents(ga_instance, selected_parents):
@@ -59,6 +61,7 @@ def on_mutation(ga_instance, offspring_mutation):
     print("on_mutation()")
 
 def on_generation(ga_instance):
+    print("Fitness of the best solution :", ga_instance.best_solution()[1])
     print("on_generation()")
 
 def on_stop(ga_instance, last_population_fitness):
@@ -80,29 +83,33 @@ def fitness_func(solution, solution_idx):
     X_test_turbo = X_test
     #aux = np.empty(X_train.shape)
     for i in range(columns):
-        print("Train ____"+ str(i) +"_____")
+        #print("Train ____"+ str(i) +"_____")
         for j in range(lines):
             
             X_train_turbo[j][i] = X_train_turbo[j][i] * solution[i]
 
     for i in range(columnsTest):
-        print("Test ____"+ str(i) +"_____")
-        for j in range(lines):
+        #print("Test ____"+ str(i) +"_____")
+        for j in range(linesTest):
 
             X_test_turbo[j][i] = X_test_turbo[j][i] * solution[i]
         
-    print("cheguei")
-    fit = svm.fit(X_train_turbo, y_train.ravel())
+    #print("cheguei")
+    fit = svm.fit(X_train_turbo, y_train)
     predictions = fit.predict(X_test_turbo)
-    print(accuracy_score(y_test, predictions))
-    print("--------------------------")
-    fitness = 1 / accuracy_score(y_test, predictions) -1
-    print(fitness)
+    # print("HyperParameters")
+    # print(solution)
+    # print("F1_score-------------------")
+    # print(f1_score(y_test, predictions))
+    # print("fitness--------------------")
+    fitness = f1_score(y_test, predictions, zero_division=1, average="micro")
+    # print(classification_report(y_test, predictions))
+    # print(fitness)
     return fitness
 
 fitness_function = fitness_func
 
-num_generations = 50
+num_generations = 20 #50
 num_parents_mating = 4
 
 sol_per_pop = 8
@@ -111,13 +118,15 @@ num_genes = len(function_inputs)
 init_range_low = -1
 init_range_high = 1
 
+keep_elitism = 1
+
 parent_selection_type = "rws"
-keep_parents = 0
+keep_parents = -1
 
 crossover_type = "single_point"
 
 mutation_type = "random"
-mutation_percent_genes = 10
+mutation_percent_genes = 25
 
 ga_instance = pygad.GA(num_generations=num_generations,
                        num_parents_mating=num_parents_mating,
