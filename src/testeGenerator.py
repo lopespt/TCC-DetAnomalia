@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pandas as ps
 
-excel = pd.read_csv("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/dataset/weather_data_csv.csv", nrows=200)
+excel = pd.read_csv("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/dataset/Refine/weather_data_124.csv", nrows=200)
 
 colunas = list(excel.columns)
 colunas2 = colunas
@@ -39,7 +39,7 @@ print(colunas2)
 
 
 for i in colunas2:
-    x, y = generator.anomaly("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/dataset/weather_data_csv.csv", 2, 20, i)
+    x, y = generator.anomaly("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/dataset/Refine/weather_data_124.csv", 2, 20, i)
 
     x  = pd.DataFrame(x)
     

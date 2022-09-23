@@ -1,3 +1,4 @@
+from lib2to3.pytree import convert
 import pandas as pd
 import numpy as np
 
@@ -17,7 +18,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-
+from hummingbird.ml import convert, load
 
 
 wandb.init(project="my-test-project")
@@ -33,20 +34,33 @@ svm_model,svc = svm.vectorMachine(X_train, y_train)
 labels = np.array(["anomalia", "n_anomalia"])
 
 print("--------------SVM----------------------")
-svm_predict = svm_model.predict(X_test)
+#svm_predict = svm_model.predict(X_test)
+imodel = convert(svm_model, "pytorch")
+imodel.to("cuda")
+svm_predict = imodel.predict(X_test)
 print(confusion_matrix(y_test,svm_predict))
 print(classification_report(y_test,svm_predict))
 print(accuracy_score(y_test,svm_predict))
 
-wandb.sklearn.plot_calibration_curve(svm_model, a, y, "SupportVectorMachine")
-wandb.sklearn.plot_confusion_matrix(y_test, svm_predict, labels)
-wandb.sklearn.plot_outlier_candidates(svm_model, a, y)
+svm_cc = wandb.sklearn.plot_calibration_curve(svm_model, a, y, "SupportVectorMachine")
+svm_cm = wandb.sklearn.plot_confusion_matrix(y_test, svm_predict, labels)
+svm_oc = wandb.sklearn.plot_outlier_candidates(svm_model, a, y)
 #wandb.sklearn.plot_silhouette(svm_model, X_train, labels)
-wandb.sklearn.plot_learning_curve(svm_model, a, y)
-wandb.sklearn.plot_roc(y_test, svm_model.predict_proba(X_test), labels)
+svm_lc = wandb.sklearn.plot_learning_curve(svm_model, a, y)
+svm_pr = wandb.sklearn.plot_roc(y_test, svm_model.predict_proba(X_test), labels)
 #wandb.sklearn.plot_class_proportions(y_train, y_test, labels)
-wandb.sklearn.plot_summary_metrics(svm_model, X_train, y_train, X_test, y_test)
+svm_sm = wandb.sklearn.plot_summary_metrics(svm_model, X_train, y_train, X_test, y_test)
 #wandb.sklearn.plot_feature_importances(svm_model, []) 
+wandb.log(
+      {
+            "svm calibration curve": svm_cc,
+            "svm confusion matrix": svm_cm,
+            "svm outliers candidates": svm_oc,
+            "svm learning curve": svm_lc, 
+            "svm plot roc": svm_pr,
+            "svm summary metrics": svm_sm
+      }
+)
 print("-------------------------------")
 
 
@@ -60,16 +74,6 @@ print(log_predict)
 print(confusion_matrix(y_test,log_predict))
 print(classification_report(y_test,log_predict))
 print(accuracy_score(y_test,log_predict))
-
-
-wandb.sklearn.plot_calibration_curve(log_model, a, y, "LogisticRegression")
-wandb.sklearn.plot_confusion_matrix(y_test, log_predict, labels)
-wandb.sklearn.plot_outlier_candidates(log_model, a, y)
-#wandb.sklearn.plot_silhouette(svm_model, X_train, labels)
-wandb.sklearn.plot_learning_curve(log_model, a, y)
-wandb.sklearn.plot_roc(y_test, log_model.predict_proba(X_test), labels)
-#wandb.sklearn.plot_class_proportions(y_train, y_test, labels)
-wandb.sklearn.plot_summary_metrics(log_model, X_train, y_train, X_test, y_test)
 
 print("-------------------------------")
 

@@ -11,9 +11,10 @@ def conversion(dataframe):
 
 
 def creatingMatrix(npa):
-      tamanho = npa.shape
-      x = tamanho[0]
-      y = tamanho[1]
-      pesos =np.ones((x-2, y))
+      linhas, colunas = npa.shape
+      pesos = np.ones(colunas)
 
       return pesos
+
+def potara(valor, pesos):
+      return valor * pesos
