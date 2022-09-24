@@ -49,9 +49,9 @@ def merge(dirr,dirry):
     return x,y.reshape(-1,1)
 
 
-
 def balance():
     x, y = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
+    np.savetxt("y_gui.csv",y,delimiter=",",fmt='%f')
     res_x, res_y = imbalance.randomBalance(x,y)
     res_x = proc.scalar(res_x)
     print(res_x)

@@ -19,13 +19,13 @@ x,y = tc.balance()
 
 #a = pd.DataFrame(tp.prepro(x))
 #solution
-b = fusion.creatingMatrix(x)
+population = fusion.creatingMatrix(x)
 
 
 #print(type(b))
 #print(b.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=1)
 
 X_train = X_train[:1000]
 X_test = X_test[:1000]
@@ -36,8 +36,8 @@ y_train.ravel()
 #teste = X_train[:, 6]
 lines, columns = X_train.shape
 linesTest, columnsTest = X_test.shape
-svm = SVC(kernel="linear", random_state=1, C=1.0, probability=True)
-function_inputs = b
+svm = SVC(kernel="linear", C=1.0, probability=True)
+function_inputs = population
 desired_output = 1.0
 
 #fit = svm.fit(X_train, y_train)
@@ -82,18 +82,21 @@ def fitness_func(solution, solution_idx):
     X_train_turbo = X_train
     X_test_turbo = X_test
     #aux = np.empty(X_train.shape)
-    for i in range(columns):
-        #print("Train ____"+ str(i) +"_____")
-        for j in range(lines):
+    # for i in range(columns):
+    #     #print("Train ____"+ str(i) +"_____")
+    #     for j in range(lines):
             
-            X_train_turbo[j][i] = X_train_turbo[j][i] * solution[i]
+    #         X_train_turbo[j][i] = X_train_turbo[j][i] * solution[i]
 
-    for i in range(columnsTest):
-        #print("Test ____"+ str(i) +"_____")
-        for j in range(linesTest):
 
-            X_test_turbo[j][i] = X_test_turbo[j][i] * solution[i]
-        
+    X_train_turbo = np.multiply(X_train_turbo,solution.reshape(1,-1))
+
+    # for i in range(columnsTest):
+    #     #print("Test ____"+ str(i) +"_____")
+    #     for j in range(linesTest):
+
+    #         X_test_turbo[j][i] = X_test_turbo[j][i] * solution[i]
+    X_test_turbo = np.multiply(X_test_turbo,solution.reshape(1,-1))
     #print("cheguei")
     fit = svm.fit(X_train_turbo, y_train)
     predictions = fit.predict(X_test_turbo)
@@ -110,15 +113,16 @@ def fitness_func(solution, solution_idx):
 fitness_function = fitness_func
 
 num_generations = 20 #50
-num_parents_mating = 4
 
-sol_per_pop = 8
+sol_per_pop = 16
+
+num_parents_mating = sol_per_pop//2
+
+
 num_genes = len(function_inputs)
 
 init_range_low = -1
 init_range_high = 1
-
-keep_elitism = 1
 
 parent_selection_type = "rws"
 keep_parents = -1
@@ -134,12 +138,14 @@ ga_instance = pygad.GA(num_generations=num_generations,
                        fitness_func=fitness_function,
                        sol_per_pop=sol_per_pop,
                        num_genes=num_genes,
+                       #initial_population=population,
                        init_range_low=init_range_low,
                        init_range_high=init_range_high,
                        parent_selection_type=parent_selection_type,
-                       keep_parents=keep_parents,
+                       #keep_parents=keep_parents,
                        crossover_type=crossover_type,
                        mutation_type=mutation_type,
+                       keep_elitism=1,
                        mutation_percent_genes=mutation_percent_genes,
                        on_start=on_start,
                        on_fitness=on_fitness,
@@ -148,9 +154,11 @@ ga_instance = pygad.GA(num_generations=num_generations,
                        on_mutation=on_mutation,
                        on_generation=on_generation,
                        on_stop=on_stop,
-                       allow_duplicate_genes=False)
+                       allow_duplicate_genes=True)
 
 
+ga_instance.population[0,:] = np.ones((1,ga_instance.population.shape[1]))
+print(ga_instance.population[0,:])
 ga_instance.run()
 
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
