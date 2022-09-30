@@ -1,6 +1,6 @@
 from classbalance import imbalance
 
-
+from sklearn.model_selection import train_test_split
 from os import listdir
 from os.path import isfile, join
 #import pandas as pd
@@ -50,15 +50,20 @@ def merge(dirr,dirry):
 
 
 def balance():
-    x, y = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
-    np.savetxt("y_gui.csv",y,delimiter=",",fmt='%f')
+    #x, y = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
+    x = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/124_x.csv", delimiter=",")
+    y = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/124_y.csv", delimiter=",")
+    #np.savetxt("y_gui.csv",y,delimiter=",",fmt='%f')
     res_x, res_y = imbalance.randomBalance(x,y)
-    res_x = proc.scalar(res_x)
-    print(res_x)
+    X_train, X_test, y_train, y_test = train_test_split(res_x, res_y, test_size=0.3, random_state=1)
+    X_train = proc.scalar(X_train)
+    X_test = proc.scalar(X_test)
     #np.savetxt("x_out.csv",res_x,delimiter=",",fmt='%f')
-    print(res_y)
     #np.savetxt("y_out.csv",res_y,delimiter=",",fmt='%f')
-    return res_x, res_y
+    return X_train, X_test, y_train, y_test
 
 #x, y = balance()
 #a, b = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
+X_train, X_test, y_train, y_test = balance()
+
+print(X_train)

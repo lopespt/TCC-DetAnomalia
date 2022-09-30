@@ -2,11 +2,10 @@ from sklearn.tree import DecisionTreeClassifier
 
 from sklearn.ensemble import RandomForestClassifier
 
-
+arvRisco = DecisionTreeClassifier(criterion="entropy")
 
 def arvore(train_dataset_x,train_dataset_y):
 
-    arvRisco = DecisionTreeClassifier(criterion="entropy")
 
     model = arvRisco.fit(train_dataset_x,train_dataset_y)
 

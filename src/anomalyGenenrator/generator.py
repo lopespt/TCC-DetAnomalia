@@ -17,43 +17,56 @@ import threading
 # e a base de teste x e y para comparar e fazer as metricas
 def desPadrao (dataframe, coluna):
     
-    x = dataframe[coluna].values.tolist()
+    x = dataframe[coluna].values
 
     xdes = np.std(x)
     #print(xdes)
 
     return xdes
 
-def apply(dataframe, intensidade, coluna, ids, nElementos):
+def apply(dataframe, intensidade, ids):
+    np.random.seed(2)
     lista = []
     alt = []
-
-    y = random.sample(ids,nElementos)
+    df = dataframe
+    
+    lines, colums = df.shape
+   
+    #y = random.sample(ids,nElementos)
 
     for index in tqdm(dataframe.index):
         #print(dataframe["T_a"][index])
-        if index in y:
+        
+        if index in ids:
             alt.append(1)
-            ano = round(intensidade * desPadrao(dataframe, coluna) + dataframe[coluna].iloc[index], 1)
-            lista.append(ano)
+            coluna = np.random.choice(df.columns.values, size=1)
+            multiplo = intensidade * desPadrao(df, coluna)
+            df.loc[index,coluna] = round(multiplo + df[coluna].iloc[index], 1)
+            #lista.append(ano)
         else:
             alt.append(0)
-            lista.append(dataframe[coluna].iloc[index])
-    return lista, alt
+            #lista.append(dataframe[coluna].iloc[index])
+    return df, alt
 
-def anomaly(csv, intensidade, repeticao, sensor):
-    ids = []
+def anomaly(dataframe, intensidade, repeticao):
+    
+    np.random.seed(1)
+    #ids = []
 
-    dataframe = pd.read_csv(csv) #on_bad_lines="skip)
+    #dataframe = pd.read_csv(csv) #on_bad_lines="skip)
+    
     #a função ceil arredonda para cima
+    lines, colums = dataframe.shape
+
     nElementos = ceil(dataframe.size * repeticao / 100)
-    for i in tqdm(range(dataframe.size)):
-        ids.append(i)
+    ids = np.random.randint(lines, size=nElementos)
+    # for i in tqdm(range(dataframe.size)):
+    #     ids.append(i)
 
     
 
 
-    lista, y = apply(dataframe, intensidade, sensor, ids, nElementos)
+    lista, y = apply(dataframe, intensidade, ids)
 
     alt = pd.DataFrame(y)
 

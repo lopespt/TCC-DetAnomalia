@@ -10,7 +10,7 @@ import testPreProcessing as tp
 
 from sklearn.svm import SVC
 
-x,y = tc.balance()
+X_train, X_test, y_train, y_test = tc.balance()
 
 #print(type(x))
 #print(type(y))
@@ -19,18 +19,16 @@ x,y = tc.balance()
 
 #a = pd.DataFrame(tp.prepro(x))
 #solution
-population = fusion.creatingMatrix(x)
+population = fusion.creatingMatrix(X_train)
 
 
 #print(type(b))
 #print(b.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=1)
-
-X_train = X_train[:1000]
-X_test = X_test[:1000]
-y_train = y_train[:1000]
-y_test = y_test[:1000]
+# X_train = X_train[:1000]
+# X_test = X_test[:1000]
+# y_train = y_train[:1000]
+# y_test = y_test[:1000]
 y_train.ravel()
 
 #teste = X_train[:, 6]
@@ -72,47 +70,24 @@ def callback_gen(ga_instance):
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
 
 def fitness_func(solution, solution_idx):
-#       output = solution*function_inputs
-#       teste = output * c_x[:10000] #x_test
-#       fitness = 1.0 / np.abs(output - desired_output)
-#       svm_model,svc = svm.vectorMachine(teste, c_y[:10000])#y_train)
-#       svm_predict = svm_model.predict(np.sum(output * c_x[:10000]))
-#       fitness = accuracy_score(c_y[:10000],svm_predict)
     
     X_train_turbo = X_train
     X_test_turbo = X_test
-    #aux = np.empty(X_train.shape)
-    # for i in range(columns):
-    #     #print("Train ____"+ str(i) +"_____")
-    #     for j in range(lines):
-            
-    #         X_train_turbo[j][i] = X_train_turbo[j][i] * solution[i]
-
-
+   
     X_train_turbo = np.multiply(X_train_turbo,solution.reshape(1,-1))
 
-    # for i in range(columnsTest):
-    #     #print("Test ____"+ str(i) +"_____")
-    #     for j in range(linesTest):
-
-    #         X_test_turbo[j][i] = X_test_turbo[j][i] * solution[i]
     X_test_turbo = np.multiply(X_test_turbo,solution.reshape(1,-1))
-    #print("cheguei")
+
     fit = svm.fit(X_train_turbo, y_train)
     predictions = fit.predict(X_test_turbo)
-    # print("HyperParameters")
-    # print(solution)
-    # print("F1_score-------------------")
-    # print(f1_score(y_test, predictions))
-    # print("fitness--------------------")
+    
     fitness = f1_score(y_test, predictions, zero_division=1, average="micro")
-    # print(classification_report(y_test, predictions))
-    # print(fitness)
+    
     return fitness
 
 fitness_function = fitness_func
 
-num_generations = 20 #50
+num_generations = 200 #50
 
 sol_per_pop = 16
 
