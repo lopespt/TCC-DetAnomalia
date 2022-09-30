@@ -42,5 +42,5 @@ for index in range(len(listNames)):
 
 
       
-x.to_csv("weather_data_120_f.csv",sep=',',index=False)
+x.to_csv("weather_data_jd_f.csv",sep=',',index=False)
 
