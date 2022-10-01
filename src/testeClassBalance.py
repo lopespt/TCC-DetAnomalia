@@ -1,13 +1,14 @@
 from classbalance import imbalance
-
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from os import listdir
 from os.path import isfile, join
 #import pandas as pd
 import numpy as np
+import pandas as pd
 
 from tqdm import tqdm
-from preprocessing import proc
+#from preprocessing import proc
 def teste(mypath):
     return [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
@@ -51,19 +52,25 @@ def merge(dirr,dirry):
 
 def balance():
     #x, y = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
-    x = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/124_x.csv", delimiter=",")
-    y = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/124_y.csv", delimiter=",")
+    x = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_x.csv", delimiter=",")
+    #a = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento2/weather_data_jd_f.csv", delimiter=",")
+    y = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_y.csv", delimiter=",")
     #np.savetxt("y_gui.csv",y,delimiter=",",fmt='%f')
+    #print(np.isnan(a))
     res_x, res_y = imbalance.randomBalance(x,y)
+    #print(np.isnan(res_x))
     X_train, X_test, y_train, y_test = train_test_split(res_x, res_y, test_size=0.3, random_state=1)
-    X_train = proc.scalar(X_train)
-    X_test = proc.scalar(X_test)
+
+
+    s = preprocessing.MinMaxScaler().fit(X_train)
+    X_train = s.transform(X_train)
+    X_test = s.transform(X_test)
     #np.savetxt("x_out.csv",res_x,delimiter=",",fmt='%f')
     #np.savetxt("y_out.csv",res_y,delimiter=",",fmt='%f')
     return X_train, X_test, y_train, y_test
 
 #x, y = balance()
 #a, b = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
-X_train, X_test, y_train, y_test = balance()
+#X_train, X_test, y_train, y_test = balance()
 
-print(X_train)
+#print(X_train)

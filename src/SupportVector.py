@@ -9,11 +9,15 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 import testPreProcessing as tp
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
+import logging as log
 
 import uuid
 
-gu_id = uuid.uuid1()
 
+
+gu_id = uuid.uuid1()
+iid = str(gu_id)
+log.basicConfig(filename="../src/logs/log/"+ str(gu_id) + ".log", filemode="a", format="f'{iid},%(asctime)s, %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 X_train, X_test, y_train, y_test = tc.balance()
 
 population = fusion.creatingMatrix(X_train)
@@ -39,6 +43,7 @@ def on_start(ga_instance):
 
 def on_fitness(ga_instance, population_fitness):
     print("Fitness of the solution :", ga_instance.best_solution()[1])
+    log.warning()
     print("on_fitness()")
 
 def on_parents(ga_instance, selected_parents):
@@ -51,6 +56,7 @@ def on_mutation(ga_instance, offspring_mutation):
     print("on_mutation()")
 
 def on_generation(ga_instance):
+
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
     print("on_generation()")
 
@@ -137,7 +143,7 @@ def main():
       print("Parameters of the best solution : {solution}".format(solution=solution))
       print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 
-      prediction = np.sum(np.array(function_inputs)*solution)
+      prediction = np.sum(np.array(function_inputs)*solution) # aqui vai os 10% do 2 teste
       print("Predicted output based on the best solution : {prediction}".format(prediction=prediction))
       plt.figure()
       plt.plot(ga_instance.best_solutions_fitness)

@@ -58,7 +58,7 @@ def anomaly(dataframe, intensidade, repeticao):
     #a função ceil arredonda para cima
     lines, colums = dataframe.shape
 
-    nElementos = ceil(dataframe.size * repeticao / 100)
+    nElementos = ceil(lines * repeticao / 100)
     ids = np.random.randint(lines, size=nElementos)
     # for i in tqdm(range(dataframe.size)):
     #     ids.append(i)
