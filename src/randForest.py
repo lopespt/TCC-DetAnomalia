@@ -100,7 +100,7 @@ def fitness_func(solution, solution_idx):
 
 fitness_function = fitness_func
 
-num_generations = 3 #50
+num_generations = 10 #50
 
 sol_per_pop = 16
 
