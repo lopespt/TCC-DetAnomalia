@@ -167,7 +167,7 @@ def main():
 
     X_test_turbo_ga = np.multiply(X_test_ga,solution.reshape(1,-1))
 
-    fit = logistic.fit(X_test_turbo_ga, y_train)
+    fit = logistic.fit(X_train_turbo_ga, y_train)
 
     prediction = fit.predict(X_test_turbo_ga) # aqui vai os 10% do 2 teste
 

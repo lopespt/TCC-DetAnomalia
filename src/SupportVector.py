@@ -109,7 +109,7 @@ def fitness_func(solution, solution_idx):
 
 fitness_function = fitness_func
 
-num_generations = 20 #50
+num_generations = 10 #50
 
 sol_per_pop = 16
 
@@ -177,7 +177,7 @@ def main():
 
     X_test_turbo_ga = np.multiply(X_test_ga,solution.reshape(1,-1))
 
-    fit = svm.fit(X_test_turbo_ga, y_train)
+    fit = svm.fit(X_train_turbo_ga, y_train)
 
     prediction = fit.predict(X_test_turbo_ga) # aqui vai os 10% do 2 teste
 
