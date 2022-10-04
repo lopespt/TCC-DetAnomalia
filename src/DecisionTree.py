@@ -4,12 +4,9 @@ from sklearn.tree import DecisionTreeClassifier
 from fusionData import fusion
 import testeClassBalance as tc
 import pandas as pd
-from classifiers import svm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 import testPreProcessing as tp
-from classifiers import tree, logisticReg, svm
-from sklearn.svm import SVC
 import logging as log
 import uuid
 import matplotlib.pyplot as plt
@@ -27,12 +24,12 @@ print(gu_id)
 inicio=0
 tempo = []
 
-X_train = X_train[:1000]
-X_test = X_test[:1000]
-y_train = y_train[:1000]
-y_test = y_test[:1000]
-X_test_ga = X_test_ga[:1000]
-y_test_ga = y_test_ga[:1000]
+# X_train = X_train[:1000]
+# X_test = X_test[:1000]
+# y_train = y_train[:1000]
+# y_test = y_test[:1000]
+# X_test_ga = X_test_ga[:1000]
+# y_test_ga = y_test_ga[:1000]
 y_train.ravel()
 
 lines, columns = X_train.shape
@@ -60,7 +57,6 @@ def on_fitness(ga_instance, population_fitness):
     log.warning("O tempo de fitness é:"+ str((fim - inicio) % 60))
     print("O tempo de fitness é: " + str((fim - inicio) % 60))
     tempo.append((fim - inicio) % 60)
-    print("on_fitness()")
     print("on_fitness()")
 
 def on_parents(ga_instance, selected_parents):
@@ -185,7 +181,7 @@ def main():
 
     X_test_turbo_ga = np.multiply(X_test_ga,solution.reshape(1,-1))
 
-    fit = svm.fit(X_test_turbo_ga, y_train)
+    fit = arvRisco.fit(X_test_turbo_ga, y_train)
 
     prediction = fit.predict(X_test_turbo_ga) # aqui vai os 10% do 2 teste
 

@@ -1,12 +1,12 @@
-import DecisionTree as dc
-import SupportVector as svm
+#import DecisionTree as dc
+#import SupportVector as svm
 import LogReg as lr
-import randForest as rf
+#import randForest as rf
 
-dc.main()
+#dc.main()
 
 #svm.main()
-#lr.main()
+lr.main()
 
 #rf.main()
 

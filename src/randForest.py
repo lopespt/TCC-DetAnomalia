@@ -9,23 +9,28 @@ from classifiers import svm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 import testPreProcessing as tp
-from classifiers import tree, logisticReg, svm
-from sklearn.svm import SVC
 import uuid
 import matplotlib.pyplot as plt
-
+import logging as log
+import time
 
 gu_id = uuid.uuid1()
 
 X_train, X_test, y_train, y_test,X_test_ga,y_test_ga = tc.balance()
-
+iid = str(gu_id)
+log.basicConfig(filename="../src/logs/log/randfor/"+ str(gu_id) + ".log", filemode="a", format= "%(asctime)s \n %(message)s",datefmt='%d-%b-%y %H:%M:%S')
 population = fusion.creatingMatrix(X_train)
-
+count = 0
 print(gu_id)
-X_train = X_train[:1000]
-X_test = X_test[:1000]
-y_train = y_train[:1000]
-y_test = y_test[:1000]
+inicio=0
+tempo = []
+
+# X_train = X_train[:1000]
+# X_test = X_test[:1000]
+# y_train = y_train[:1000]
+# y_test = y_test[:1000]
+# X_test_ga = X_test_ga[:1000]
+# y_test_ga = y_test_ga[:1000]
 y_train.ravel()
 
 lines, columns = X_train.shape
@@ -43,10 +48,16 @@ desired_output = 1.0
 def on_start(ga_instance):
       print("--------------RandomArvDecisão----------------------")
       print("on_start()")
+      print(iid)
       print("-------------------------------")
 
 def on_fitness(ga_instance, population_fitness):
     print("Fitness of the solution :", ga_instance.best_solution()[1])
+
+    fim = time.time()
+    log.warning("O tempo de fitness é:"+ str((fim - inicio) % 60))
+    print("O tempo de fitness é: " + str((fim - inicio) % 60))
+    tempo.append((fim - inicio) % 60)
     print("on_fitness()")
 
 def on_parents(ga_instance, selected_parents):
@@ -59,36 +70,37 @@ def on_mutation(ga_instance, offspring_mutation):
     print("on_mutation()")
 
 def on_generation(ga_instance):
+    solution, solution_fitness, solution_idx = ga_instance.best_solution()
+    array = "Parameters of the pesos \n {solution}".format(solution=solution)
+    print("Generation : ", ga_instance.generations_completed)
+    log.warning(array)
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
+    logg = "Fitness of the generation solution "+ str(ga_instance.generations_completed) +": " + str(ga_instance.best_solution()[1])
+    log.warning(logg)
     print("on_generation()")
 
 def on_stop(ga_instance, last_population_fitness):
     print("on_stop()")
 
-def callback_gen(ga_instance):
-    print("Generation : ", ga_instance.generations_completed)
-    print("Fitness of the best solution :", ga_instance.best_solution()[1])
 
 def fitness_func(solution, solution_idx):
-    
-      X_train_turbo = X_train
-      X_test_turbo = X_test
+    inicio = time.time()
+    X_train_turbo = X_train
+    X_test_turbo = X_test
 
 
-      X_train_turbo = np.multiply(X_train_turbo,solution.reshape(1,-1))
+    X_train_turbo = np.multiply(X_train_turbo,solution.reshape(1,-1))
 
-      X_test_turbo = np.multiply(X_test_turbo,solution.reshape(1,-1))
-      fit = randomForest.fit(X_train_turbo, y_train)
-      predictions = fit.predict(X_test_turbo)
-      fitness = f1_score(y_test, predictions, zero_division=1, average="micro")
-      #print(confusion_matrix(y_test,predictions))
-      #print(classification_report(y_test,predictions))
-      #print(accuracy_score(y_test,predictions))
-      return fitness
+    X_test_turbo = np.multiply(X_test_turbo,solution.reshape(1,-1))
+    fit = randomForest.fit(X_train_turbo, y_train)
+    predictions = fit.predict(X_test_turbo)
+    fitness = f1_score(y_test, predictions, zero_division=1, average="micro")
+
+    return fitness
 
 fitness_function = fitness_func
 
-num_generations = 20 #50
+num_generations = 3 #50
 
 sol_per_pop = 16
 
@@ -110,7 +122,7 @@ mutation_percent_genes = 25
 
 ga_instance = pygad.GA(num_generations=num_generations,
                        num_parents_mating=num_parents_mating,
-                       callback_generation=callback_gen,
+                       #callback_generation=callback_gen,
                        fitness_func=fitness_function,
                        sol_per_pop=sol_per_pop,
                        num_genes=num_genes,
@@ -134,20 +146,42 @@ ga_instance = pygad.GA(num_generations=num_generations,
 
 ga_instance.population[0,:] = np.ones((1,ga_instance.population.shape[1]))
 def main():
+    print(ga_instance.population[0,:])
+    ga_instance.run()
 
-      
-      print(ga_instance.population[0,:])
-      ga_instance.run()
+    solution, solution_fitness, solution_idx = ga_instance.best_solution()
 
-      solution, solution_fitness, solution_idx = ga_instance.best_solution()
-      print("Parameters of the best solution : {solution}".format(solution=solution))
-      print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
+    array_de_pesos = "Parameters of the best solution \n {solution}".format(solution=solution)
+    print(array_de_pesos)
+    log.warning(array_de_pesos)
+    melhor_f1 = "Fitness value of the best solution(f1) \n  {solution_fitness}".format(solution_fitness=solution_fitness)
+    print(melhor_f1)
+    log.warning(melhor_f1)
+    
+    log.warning("O tempo medio foi: " + str(np.median(tempo)) +  " Segundos")
 
-      prediction = np.sum(np.array(function_inputs)*solution)
-      print("Predicted output based on the best solution : {prediction}".format(prediction=prediction))
-      #ga_instance.plot_fitness(save_dir="../src/logs/png/dec_tree/dec_tree_png_" + str(gu_id))
-      plt.figure()
-      plt.plot(ga_instance.best_solutions_fitness)
-      plt.savefig("../src/logs/png/rand_forest/rand_forest_png_" + str(gu_id))
-      #plt.show()
-      ga_instance.save("../src/saves/rand_forest/rand_forest_GA_" + str(gu_id))
+    X_train_turbo_ga = np.multiply(X_train,solution.reshape(1,-1))
+
+
+    X_test_turbo_ga = np.multiply(X_test_ga,solution.reshape(1,-1))
+
+    fit = randomForest.fit(X_test_turbo_ga, y_train)
+
+    prediction = fit.predict(X_test_turbo_ga) # aqui vai os 10% do 2 teste
+
+    puntuacao = f1_score(y_test_ga, prediction, zero_division=1, average="micro")
+
+    temp = "Predicted output based on the best solution : {puntuacao}".format(puntuacao=puntuacao)
+    print(confusion_matrix(y_test_ga,prediction))
+    print(classification_report(y_test_ga,prediction))
+    print(accuracy_score(y_test_ga,prediction))
+    log.warning(confusion_matrix(y_test_ga,prediction))
+    log.warning(classification_report(y_test_ga,prediction))
+    log.warning(accuracy_score(y_test_ga,prediction))
+    print(temp)
+    log.warning(temp)
+    plt.figure()
+    plt.plot(ga_instance.best_solutions_fitness)
+    plt.savefig("../src/logs/png/rand_forest/rand_forest_png_" + str(gu_id))
+    #plt.show()
+    ga_instance.save("../src/saves/rand_forest/rand_forest_GA_" + str(gu_id))
