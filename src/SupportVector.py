@@ -184,7 +184,12 @@ def main():
     puntuacao = f1_score(y_test_ga, prediction, zero_division=1, average="micro")
 
     temp = "Predicted output based on the best solution : {puntuacao}".format(puntuacao=puntuacao)
-
+    print(confusion_matrix(y_test_ga,prediction))
+    print(classification_report(y_test_ga,prediction))
+    print(accuracy_score(y_test_ga,prediction))
+    log.warning(confusion_matrix(y_test_ga,prediction))
+    log.warning(classification_report(y_test_ga,prediction))
+    log.warning(accuracy_score(y_test_ga,prediction))
     print(temp)
     log.warning(temp)
 
