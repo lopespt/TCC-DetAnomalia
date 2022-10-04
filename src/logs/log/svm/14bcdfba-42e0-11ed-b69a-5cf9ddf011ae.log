@@ -1,0 +1,33 @@
+03-Oct-22 02:56:26 
+ O tempo de fitness é:26.851421117782593
+03-Oct-22 02:56:36 
+ Parameters of the pesos 
+ [ 1.          0.35236371  1.          1.12162906  1.          0.21673748
+  1.          1.          1.          1.76141459  1.          1.
+  1.          1.          1.          1.          1.         -0.45607972
+  0.45952857 -0.39651768  0.49989231]
+03-Oct-22 02:56:45 
+ Fitness of the generation solution 1: 0.558
+03-Oct-22 02:56:50 
+ O tempo de fitness é:50.876901388168335
+03-Oct-22 02:56:59 
+ Parameters of the pesos 
+ [ 1.          1.71017346  1.          1.          0.26021292  1.
+  1.          1.          1.88030108  1.79348951  1.          1.
+  1.          1.          1.90768472  1.          0.07752988  0.66162957
+ -0.24649897  0.23437222  0.3407862 ]
+03-Oct-22 02:57:08 
+ Fitness of the generation solution 2: 0.562
+03-Oct-22 02:57:13 
+ Parameters of the best solution 
+ [ 1.          1.71017346  1.          1.          0.26021292  1.
+  1.          1.          1.88030108  1.79348951  1.          1.
+  1.          1.          1.90768472  1.          0.07752988  0.66162957
+ -0.24649897  0.23437222  0.3407862 ]
+03-Oct-22 02:57:13 
+ Fitness value of the best solution(f1) 
+  0.562
+03-Oct-22 02:57:13 
+ O tempo medio foi: 38.864161252975464 Segundos
+03-Oct-22 02:57:13 
+ Predicted output based on the best solution : 0.488

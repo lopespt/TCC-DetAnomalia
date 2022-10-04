@@ -15,7 +15,7 @@ import uuid
 
 gu_id = uuid.uuid1()
 
-X_train, X_test, y_train, y_test = tc.balance()
+X_train, X_test, y_train, y_test,X_test_ga,y_test_ga = tc.balance()
 
 population = fusion.creatingMatrix(X_train)
 

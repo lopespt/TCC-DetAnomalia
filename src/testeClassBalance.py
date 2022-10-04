@@ -52,22 +52,24 @@ def merge(dirr,dirry):
 
 def balance():
     #x, y = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
-    x = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_x.csv", delimiter=",")
+    x = np.genfromtxt("/home/tccanomalia/tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_x.csv", delimiter=",")
     #a = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento2/weather_data_jd_f.csv", delimiter=",")
-    y = np.genfromtxt("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_y.csv", delimiter=",")
+    y = np.genfromtxt("/home/tccanomalia/tcc/TCC-DetAnomalia/src/dados/experimento1/2Intensidade_20Porcentagem_y.csv", delimiter=",")
     #np.savetxt("y_gui.csv",y,delimiter=",",fmt='%f')
     #print(np.isnan(a))
     res_x, res_y = imbalance.randomBalance(x,y)
     #print(np.isnan(res_x))
-    X_train, X_test, y_train, y_test = train_test_split(res_x, res_y, test_size=0.3, random_state=1)
+    X_train, X_test_temp, y_train, y_test_temp = train_test_split(res_x, res_y, test_size=0.3, random_state=1)
 
+    X_test_classificator, X_test_ga,y_test_classificator, y_test_ga = train_test_split(X_test_temp, y_test_temp, test_size=1/3, random_state=1)
 
     s = preprocessing.MinMaxScaler().fit(X_train)
     X_train = s.transform(X_train)
-    X_test = s.transform(X_test)
+    X_test_classificator = s.transform(X_test_classificator)
+    X_test_ga = s.transform(X_test_ga)
     #np.savetxt("x_out.csv",res_x,delimiter=",",fmt='%f')
     #np.savetxt("y_out.csv",res_y,delimiter=",",fmt='%f')
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test_classificator, y_train, y_test_classificator,X_test_ga,y_test_ga
 
 #x, y = balance()
 #a, b = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
