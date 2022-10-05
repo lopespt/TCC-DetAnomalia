@@ -201,3 +201,5 @@ def main():
     plt.savefig("../src/logs/png/dec_tree/dec_tree_png_" + str(gu_id))
     #plt.show()
     ga_instance.save("../src/saves/dec_tree/dec_tree_GA_" + str(gu_id))
+    print("--------------ArvDecisão----------------------")
+    print(iid)

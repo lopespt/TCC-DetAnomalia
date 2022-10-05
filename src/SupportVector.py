@@ -198,3 +198,5 @@ def main():
     plt.savefig("../src/logs/png/svm/svm_png_" + str(gu_id))
     #plt.show()
     ga_instance.save("../src/saves/svm/svm_GA_" + str(gu_id))
+    print("--------------SVM----------------------")
+    print(iid)

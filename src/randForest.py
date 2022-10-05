@@ -185,3 +185,5 @@ def main():
     plt.savefig("../src/logs/png/rand_forest/rand_forest_png_" + str(gu_id))
     #plt.show()
     ga_instance.save("../src/saves/rand_forest/rand_forest_GA_" + str(gu_id))
+    print("--------------RandomArvDecisão----------------------")
+    print(iid)

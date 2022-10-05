@@ -187,3 +187,5 @@ def main():
     plt.savefig("../src/logs/png/logreg/logreg_png_" + str(gu_id))
     #plt.show()
     ga_instance.save("../src/saves/logreg/logreg_GA_" + str(gu_id))
+    print("--------------Logictic----------------------")
+    print(iid)
