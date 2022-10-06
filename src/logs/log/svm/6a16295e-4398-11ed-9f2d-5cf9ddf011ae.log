@@ -1,0 +1,95 @@
+04-Oct-22 03:18:09 
+ O tempo de fitness é:9.833672285079956
+04-Oct-22 05:12:31 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+04-Oct-22 07:00:41 
+ Fitness of the generation solution 1: 0.6127970226166619
+04-Oct-22 07:51:19 
+ O tempo de fitness é:19.454708337783813
+04-Oct-22 09:33:01 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+04-Oct-22 11:14:35 
+ Fitness of the generation solution 2: 0.6127970226166619
+04-Oct-22 12:05:30 
+ O tempo de fitness é:30.03124737739563
+04-Oct-22 13:48:17 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+04-Oct-22 15:36:36 
+ Fitness of the generation solution 3: 0.6127970226166619
+04-Oct-22 16:27:30 
+ O tempo de fitness é:30.231218576431274
+04-Oct-22 18:09:41 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+04-Oct-22 19:51:16 
+ Fitness of the generation solution 4: 0.6127970226166619
+04-Oct-22 20:41:58 
+ O tempo de fitness é:58.31600904464722
+04-Oct-22 22:23:33 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 00:05:28 
+ Fitness of the generation solution 5: 0.6127970226166619
+05-Oct-22 00:56:21 
+ O tempo de fitness é:21.34076476097107
+05-Oct-22 02:38:02 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 04:19:37 
+ Fitness of the generation solution 6: 0.6127970226166619
+05-Oct-22 05:10:25 
+ O tempo de fitness é:25.68838620185852
+05-Oct-22 06:46:08 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 08:21:17 
+ Fitness of the generation solution 7: 0.6127970226166619
+05-Oct-22 09:09:07 
+ O tempo de fitness é:7.617789268493652
+05-Oct-22 10:50:18 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 12:31:58 
+ Fitness of the generation solution 8: 0.6127970226166619
+05-Oct-22 13:25:04 
+ O tempo de fitness é:4.055995941162109
+05-Oct-22 15:07:12 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 16:48:41 
+ Fitness of the generation solution 9: 0.6127970226166619
+05-Oct-22 17:39:35 
+ O tempo de fitness é:35.495062828063965
+05-Oct-22 19:21:48 
+ Parameters of the pesos 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 21:03:32 
+ Fitness of the generation solution 10: 0.6127970226166619
+05-Oct-22 21:54:29 
+ Parameters of the best solution 
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+05-Oct-22 21:54:29 
+ Fitness value of the best solution(f1) 
+  0.6127970226166619
+05-Oct-22 21:54:29 
+ O tempo medio foi: 23.514575481414795 Segundos
+05-Oct-22 21:57:36 
+ [[1354  392]
+ [ 955  793]]
+05-Oct-22 21:57:36 
+               precision    recall  f1-score   support
+
+         0.0       0.59      0.78      0.67      1746
+         1.0       0.67      0.45      0.54      1748
+
+    accuracy                           0.61      3494
+   macro avg       0.63      0.61      0.60      3494
+weighted avg       0.63      0.61      0.60      3494
+
+05-Oct-22 21:57:36 
+ 0.6144819690898683
+05-Oct-22 21:57:36 
+ Predicted output based on the best solution : 0.6144819690898683

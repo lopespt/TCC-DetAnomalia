@@ -60,9 +60,13 @@ def balance():
     res_x, res_y = imbalance.randomBalance(x,y)
     #print(np.isnan(res_x))
     X_train, X_test_temp, y_train, y_test_temp = train_test_split(res_x, res_y, test_size=0.3, random_state=1)
-
+    print("Xtrain: " +  str(np.shape(X_train)[0]))
+    print("ytrain: " +  str(np.shape(y_train)[0]))
     X_test_classificator, X_test_ga,y_test_classificator, y_test_ga = train_test_split(X_test_temp, y_test_temp, test_size=1/3, random_state=1)
-
+    print("X_test_ga: " +  str(np.shape(X_test_ga)[0]))
+    print("y_test_ga: " +  str(np.shape(y_test_ga)[0]))
+    print("x_test: " +  str(np.shape(X_test_classificator)[0]))
+    print("y-test: " + str(np.shape(y_test_classificator)[0]))
     s = preprocessing.MinMaxScaler().fit(X_train)
     X_train = s.transform(X_train)
     X_test_classificator = s.transform(X_test_classificator)
@@ -73,6 +77,6 @@ def balance():
 
 #x, y = balance()
 #a, b = merge("/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/xfiles","/home/kaike/Documents/Code/Tcc/TCC-DetAnomalia/src/yfiles")
-#X_train, X_test, y_train, y_test = balance()
+X_train, X_test_classificator, y_train, y_test_classificator,X_test_ga,y_test_ga = balance()
 
 #print(X_train)
