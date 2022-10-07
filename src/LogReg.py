@@ -48,9 +48,9 @@ def on_start(ga_instance):
 
 def on_fitness(ga_instance, population_fitness):
     fim = time.time()
-    log.warning("O tempo de fitness é:"+ str((fim - inicio) % 60))
-    print("O tempo de fitness é: " + str((fim - inicio) % 60))
-    tempo.append((fim - inicio) % 60)
+    log.warning("O tempo de fitness é:"+ str((fim - inicio) ))
+    print("O tempo de fitness é: " + str((fim - inicio) ))
+    tempo.append((fim - inicio) )
     print("on_fitness()")
 
 def on_parents(ga_instance, selected_parents):
