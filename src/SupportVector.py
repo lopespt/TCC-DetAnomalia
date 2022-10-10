@@ -12,6 +12,7 @@ from sklearn.svm import SVC
 import logging as log
 import time
 import uuid
+from sklearn.svm import LinearSVC
 
 
 
@@ -33,26 +34,30 @@ y_train.ravel()
 
 lines, columns = X_train.shape
 linesTest, columnsTest = X_test.shape
-svm = SVC(kernel="linear", C=1.0, probability=True)
+svm = LinearSVC()
 function_inputs = population
 desired_output = 1.0
 
 
 def on_start(ga_instance):
-      print("--------------SVM----------------------")
-      print("on_start()")
-      print(iid)
+    global inicio 
+    inicio = time.time()
+    print("--------------SVM----------------------")
+    print("on_start()")
+    print(iid)
       
-      print("-------------------------------")
+    print("-------------------------------")
 
 def on_fitness(ga_instance, population_fitness):
     print("Fitness of the solution :", ga_instance.best_solution()[1])
-    
+    global inicio
     fim = time.time()
     log.warning("O tempo de fitness é:"+ str((fim - inicio) ))
     print("O tempo de fitness é: " + str((fim - inicio) ))
     tempo.append((fim - inicio) )
     print("on_fitness()")
+    
+    
 
 def on_parents(ga_instance, selected_parents):
     print("on_parents()")
@@ -89,7 +94,7 @@ def on_stop(ga_instance, last_population_fitness):
     
 
 def fitness_func(solution, solution_idx):
-    inicio = time.time()
+    
     X_train_turbo = X_train
     X_test_turbo = X_test
 
@@ -104,7 +109,7 @@ def fitness_func(solution, solution_idx):
     predictions = fit.predict(X_test_turbo)
    
     fitness = f1_score(y_test, predictions, zero_division=1, average="micro")
-
+    
     return fitness
 
 fitness_function = fitness_func
